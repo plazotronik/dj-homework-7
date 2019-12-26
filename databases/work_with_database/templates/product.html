@@ -8,7 +8,11 @@
             <h1>Телефон</h1>
         </div>
         <div class="content">
-
+            <img src={{device.image}} border=?>
+            <br><p>Наименование: {{ device.name }}</p>
+            <p>Стоимость: {{ device.price }} руб.</p>
+            <p>Дата выхода: {{device.release_date}}</p>
+            <p>Наличие LTE: {{device.lte_exists}}</p>
         </div>
     </div>
 {% endblock %}

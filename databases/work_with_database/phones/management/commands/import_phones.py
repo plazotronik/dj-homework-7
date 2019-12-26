@@ -1,7 +1,9 @@
 import csv
+from datetime import datetime
 
 from django.core.management.base import BaseCommand
 from phones.models import Phone
+
 
 
 class Command(BaseCommand):
@@ -16,5 +18,13 @@ class Command(BaseCommand):
             next(phone_reader)
 
             for line in phone_reader:
-                # TODO: Добавьте сохранение модели
-                pass
+                device = Phone()
+                device.id_device = int(line[0])
+                device.name = line[1]
+                device.image = line[2]
+                device.price = int(line[3])
+                device.release_date = datetime.fromisoformat(line[4])
+                device.lte_exists = line[5]
+                device.slug = str(device.name).lower().replace(' ', '-')
+                device.save()
+
