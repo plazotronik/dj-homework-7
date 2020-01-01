@@ -4,23 +4,14 @@ from phones.models import Phone
 
 def show_catalog(request):
     template = 'catalog.html'
-    objects = Phone.objects.all()
-    devices = []
-    for object in objects:
-        devices.append({
-            'name': object.name,
-            'price': object.price,
-            'slug': object.slug,
-            'image': object.image,
-        })
     sort = request.GET.get('sort')
     if sort == 'min_price':
-        new_devices = sorted(devices, key=lambda x: x['price'])
+        devices = Phone.objects.order_by('price')
     elif sort == 'max_price':
-        new_devices = sorted(devices, key=lambda x: x['price'], reverse=True)
+        devices = Phone.objects.order_by('-price')
     else:
-        new_devices = sorted(devices, key=lambda x: x['name'])
-    context = {'devices': new_devices}
+        devices = Phone.objects.order_by('name')
+    context = {'devices': devices}
     return render(request, template, context)
 
 
